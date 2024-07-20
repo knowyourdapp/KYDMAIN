@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'; // Adjust the import path as needed
 import landing from '../assets/landing.png';
@@ -10,6 +10,7 @@ import axios from 'axios';
 function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [signupData, setSignupData] = useState({
     username: '',
@@ -18,6 +19,7 @@ function Index() {
     reEnterPassword: '',
     walletAddress: '',
   });
+  const [errorMessages, setErrorMessages] = useState({ login: '', signup: '' });
   const navigate = useNavigate();
 
   const toggleLoginModal = () => {
@@ -26,14 +28,6 @@ function Index() {
 
   const toggleAccountModal = () => {
     setShowAccountModal(!showAccountModal);
-  };
-
-  const goToHomePage = () => {
-    navigate('/home');
-  };
-
-  const goToExplorePage = () => {
-    navigate('/feed');
   };
 
   const handleLoginChange = (e) => {
@@ -49,44 +43,44 @@ function Index() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/login', loginData);
+      const response = await axios.post('http://localhost:5000/api/auth/login', loginData);
       console.log('Login successful:', response.data);
-      // Redirect to home page or handle success
+      navigate('/home'); // Redirect to home page
     } catch (error) {
       console.error('Login error:', error.response.data);
+      setErrorMessages({ ...errorMessages, login: error.response.data.message || 'Invalid credentials' });
     }
   };
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
-    console.log('Signup data:', signupData);
-  
-    // Basic validation before sending the request
     if (signupData.password !== signupData.reEnterPassword) {
-      console.error('Passwords do not match');
+      setErrorMessages({ ...errorMessages, signup: 'Passwords do not match' });
       return;
     }
   
     try {
-      const response = await axios.post('/api/auth/signup', signupData);
+      const response = await axios.post('http://localhost:5000/api/auth/signup', signupData);
       console.log('Signup successful:', response.data);
-      // Redirect to home page or handle success
+      setShowSuccessModal(true); // Show success modal
+      setShowAccountModal(false); // Hide signup modal
+      setErrorMessages({ ...errorMessages, signup: '' }); // Clear any existing signup errors
     } catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error('Signup error: Server responded with an error:', error.response.data);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('Signup error: No response received:', error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Signup error: Error setting up the request:', error.message);
-      }
-      console.error('Error configuration:', error.config);
+      console.error('Signup error:', error.response.data);
+      setErrorMessages({ ...errorMessages, signup: error.response.data.message || 'Signup error' });
     }
   };
-  
+
+  useEffect(() => {
+    if (showSuccessModal) {
+      const timer = setTimeout(() => {
+        setShowSuccessModal(false);
+        setShowLoginModal(true); // Show login modal after 4 seconds
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessModal]);
+
   return (
     <div className='relative h-screen flex flex-col justify-center overflow-hidden blue md:p-4 p-2'>
       <Navbar toggleLoginModal={toggleLoginModal} />
@@ -101,8 +95,8 @@ function Index() {
             <p className='text-white font-bold mt-2 text-center text-sm md:text-sm'>Curate your favorite dApps, engage with the community, review and earn $DP.</p>
           </div>
           <div className='flex space-x-4'>
-            <button className='bg-orange-500 text-black rounded-lg p-3 font-bold text-sm md:text-sm shadow' onClick={goToHomePage}>Go to Home</button>
-            <button className='bg-white text-black rounded-lg p-3 font-bold text-sm md:text-sm shadow' onClick={goToExplorePage}>Explore dApps!</button>
+            <button className='bg-orange-500 text-black rounded-lg p-3 font-bold text-sm md:text-sm shadow' onClick={() => navigate('/home')}>Go to Home</button>
+            <button className='bg-white text-black rounded-lg p-3 font-bold text-sm md:text-sm shadow' onClick={() => navigate('/feed')}>Explore dApps!</button>
           </div>
         </div>
         <div className="h-screen z-20 w-full md:w-6/12 md:h-[700px] relative hidden md:block">
@@ -123,6 +117,7 @@ function Index() {
             </div>
             <div className="w-full md:w-1/3">
               <h2 className="text-lg font-bold mb-4 text-center">Login to your Account</h2>
+              {errorMessages.login && <p className="text-red-500 text-center mb-4">{errorMessages.login}</p>}
               <form onSubmit={handleLoginSubmit}>
                 <div className="mb-4">
                   <label className="block text-black mb-2 text-xs">Email</label>
@@ -157,25 +152,26 @@ function Index() {
 
       {showAccountModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl md:space-x-3 mx-4 flex flex-col md:flex-row">
+          <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl md:space-x-4 mx-4 flex flex-col md:flex-row">
             <button className="absolute top-1 right-3 text-gray-500 font-extrabold" onClick={toggleAccountModal}>x</button>
             <div className="w-full md:w-1/2 flex justify-center items-center rounded-lg mt-4 md:mt-0">
-              <img src={signin} alt="Game Logo" className="md:w-full w-3/4 rounded-lg" />
+              <img src={signin} alt="Game Logo" className="w-full rounded-lg" />
             </div>
             <div className="w-full md:w-1/2">
-              <h2 className="text-lg font-bold mb-4 text-center">Sign up</h2>
+              <h2 className="text-lg font-bold mb-4 text-center">Sign Up</h2>
+              {errorMessages.signup && <p className="text-red-500 text-center mb-4">{errorMessages.signup}</p>}
               <form onSubmit={handleSignupSubmit}>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label className="block text-black mb-2 text-xs">Username</label>
                   <input
                     type="text"
                     name="username"
                     value={signupData.username}
                     onChange={handleSignupChange}
-                    className="w-full p-2 text-sm border border-gray-300 rounded-lg shadow-lg"
+                    className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label className="block text-black mb-2 text-xs">Email</label>
                   <input
                     type="email"
@@ -185,7 +181,7 @@ function Index() {
                     className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label className="block text-black mb-2 text-xs">Password</label>
                   <input
                     type="password"
@@ -195,7 +191,7 @@ function Index() {
                     className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label className="block text-black mb-2 text-xs">Re-enter Password</label>
                   <input
                     type="password"
@@ -205,7 +201,7 @@ function Index() {
                     className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label className="block text-black mb-2 text-xs">Wallet Address</label>
                   <input
                     type="text"
@@ -215,12 +211,21 @@ function Index() {
                     className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
                   />
                 </div>
-                <div className="flex space-x-2 justify-center items-center">
-                  <button type="submit" className="blue text-white py-2 px-4 border-2 rounded-lg text-sm font-bold">Sign up</button>
-                  <button type="button" className="bg-white text-black border-2 py-2 px-1 text-sm rounded-lg font-bold" onClick={toggleLoginModal}>Already have an account</button>
+                <div className="flex justify-center">
+                  <button type="submit" className="blue text-white py-2 px-4 border-2 rounded-lg text-sm font-bold">Sign Up</button>
                 </div>
               </form>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center w-full max-w-sm">
+            <h2 className="text-lg font-bold mb-4">Signup Successful!</h2>
+            <p className="mb-4">You will be redirected to the login page shortly...</p>
+            <button className="bg-blue-500 text-white py-2 px-4 rounded-lg" onClick={() => setShowSuccessModal(false)}>Close</button>
           </div>
         </div>
       )}
