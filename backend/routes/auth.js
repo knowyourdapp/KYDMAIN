@@ -1,58 +1,67 @@
+// routes/auth.js
 const express = require('express');
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const User = require('../models/User');
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d',
-  });
-};
-
-// Signup Route
+// Signup route
 router.post('/signup', async (req, res) => {
-  const { username, email, password, walletAddress } = req.body;
+  const { username, email, password, reEnterPassword, walletAddress } = req.body;
 
-  const userExists = await User.findOne({ email });
+  try {
+    // Check if passwords match
+    if (password !== reEnterPassword) {
+      return res.status(400).json({ error: 'Passwords do not match' });
+    }
 
-  if (userExists) {
-    return res.status(400).json({ message: 'User already exists' });
-  }
+    // Check if user already exists
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
 
-  const user = await User.create({
-    username,
-    email,
-    password,
-    walletAddress,
-  });
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      token: generateToken(user._id),
+    // Create new user
+    user = new User({
+      username,
+      email,
+      password: hashedPassword,
+      walletAddress,
     });
-  } else {
-    res.status(400).json({ message: 'Invalid user data' });
+
+    // Save user to database
+    await user.save();
+
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Login Route
+// Login route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+  try {
+    // Check if user exists
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid credentials' });
+    }
 
-  if (user && (await user.matchPassword(password))) {
-    res.json({
-     
-      email: user.email,
-      password: user.password
-    });
-  } else {
-    res.status(401).json({ message: 'Invalid email or password' });
+    // Validate password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: 'Invalid credentials' });
+    }
+
+    res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 

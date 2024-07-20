@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';  // Adjust the import path as needed
+import Navbar from './Navbar'; // Adjust the import path as needed
 import landing from '../assets/landing.png';
 import token from '../assets/token.png';
 import token2 from '../assets/token2.png';
 import signin from '../assets/signin.png';
+import axios from 'axios';
 
 function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [signupData, setSignupData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    reEnterPassword: '',
+    walletAddress: '',
+  });
   const navigate = useNavigate();
 
   const toggleLoginModal = () => {
@@ -27,6 +36,57 @@ function Index() {
     navigate('/feed');
   };
 
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData({ ...loginData, [name]: value });
+  };
+
+  const handleSignupChange = (e) => {
+    const { name, value } = e.target;
+    setSignupData({ ...signupData, [name]: value });
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/auth/login', loginData);
+      console.log('Login successful:', response.data);
+      // Redirect to home page or handle success
+    } catch (error) {
+      console.error('Login error:', error.response.data);
+    }
+  };
+
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+    console.log('Signup data:', signupData);
+  
+    // Basic validation before sending the request
+    if (signupData.password !== signupData.reEnterPassword) {
+      console.error('Passwords do not match');
+      return;
+    }
+  
+    try {
+      const response = await axios.post('/api/auth/signup', signupData);
+      console.log('Signup successful:', response.data);
+      // Redirect to home page or handle success
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Signup error: Server responded with an error:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Signup error: No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Signup error: Error setting up the request:', error.message);
+      }
+      console.error('Error configuration:', error.config);
+    }
+  };
+  
   return (
     <div className='relative h-screen flex flex-col justify-center overflow-hidden blue md:p-4 p-2'>
       <Navbar toggleLoginModal={toggleLoginModal} />
@@ -63,15 +123,27 @@ function Index() {
             </div>
             <div className="w-full md:w-1/3">
               <h2 className="text-lg font-bold mb-4 text-center">Login to your Account</h2>
-              <form>
+              <form onSubmit={handleLoginSubmit}>
                 <div className="mb-4">
-                  <label className="block text-black mb-2 text-xs">Username</label>
-                  <input type="email" className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg" />
+                  <label className="block text-black mb-2 text-xs">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={loginData.email}
+                    onChange={handleLoginChange}
+                    className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
+                  />
                 </div>
                 <div className="mb-4">
                   <label className="block text-black mb-2 text-xs">Password</label>
-                  <input type="password" className="w-full p-2 text-sm border border-gray-300 rounded-lg shadow-lg" />
-                  <a href='' className='text-xs'>Forgot Password?</a>
+                  <input
+                    type="password"
+                    name="password"
+                    value={loginData.password}
+                    onChange={handleLoginChange}
+                    className="w-full p-2 text-sm border border-gray-300 rounded-lg shadow-lg"
+                  />
+                  <a href='#' className='text-xs'>Forgot Password?</a>
                 </div>
                 <div className="flex space-x-2 justify-center items-center">
                   <button type="submit" className="blue text-white py-2 px-4 border-2 rounded-lg text-sm font-bold">Login</button>
@@ -92,26 +164,56 @@ function Index() {
             </div>
             <div className="w-full md:w-1/2">
               <h2 className="text-lg font-bold mb-4 text-center">Sign up</h2>
-              <form>
+              <form onSubmit={handleSignupSubmit}>
                 <div className="mb-3">
                   <label className="block text-black mb-2 text-xs">Username</label>
-                  <input type="text" className="w-full p-2 text-sm border border-gray-300 rounded-lg shadow-lg" />
+                  <input
+                    type="text"
+                    name="username"
+                    value={signupData.username}
+                    onChange={handleSignupChange}
+                    className="w-full p-2 text-sm border border-gray-300 rounded-lg shadow-lg"
+                  />
                 </div>
                 <div className="mb-3">
                   <label className="block text-black mb-2 text-xs">Email</label>
-                  <input type="email" className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={signupData.email}
+                    onChange={handleSignupChange}
+                    className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
+                  />
                 </div>
                 <div className="mb-3">
                   <label className="block text-black mb-2 text-xs">Password</label>
-                  <input type="password" className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg" />
+                  <input
+                    type="password"
+                    name="password"
+                    value={signupData.password}
+                    onChange={handleSignupChange}
+                    className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
+                  />
                 </div>
                 <div className="mb-3">
                   <label className="block text-black mb-2 text-xs">Re-enter Password</label>
-                  <input type="password" className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg" />
+                  <input
+                    type="password"
+                    name="reEnterPassword"
+                    value={signupData.reEnterPassword}
+                    onChange={handleSignupChange}
+                    className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
+                  />
                 </div>
                 <div className="mb-3">
                   <label className="block text-black mb-2 text-xs">Wallet Address</label>
-                  <input type="text" className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg" />
+                  <input
+                    type="text"
+                    name="walletAddress"
+                    value={signupData.walletAddress}
+                    onChange={handleSignupChange}
+                    className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
+                  />
                 </div>
                 <div className="flex space-x-2 justify-center items-center">
                   <button type="submit" className="blue text-white py-2 px-4 border-2 rounded-lg text-sm font-bold">Sign up</button>
