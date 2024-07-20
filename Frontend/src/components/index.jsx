@@ -34,7 +34,7 @@ function Index() {
       <div className="flex flex-col md:flex-row justify-between">
         <div className="h-screen z-20 w-full md:w-4/12 md:h-[700px] flex space-y-6 flex-col justify-center items-center md:px-2">
           <p className='text-white text-[30px] md:text-[40px] lg:text-[50px] font-semibold text-center'>
-            Your <span className='text-orange-500 font-extrabold drop-shadow'>Focial Platform </span> for dApps
+            Your <span className='text-orange-500 font-extrabold drop-shadow'>Social Platform </span> for dApps
           </p>
           <div className="px-auto">
             <p className='text-white font-bold text-center text-sm md:text-sm'>Discover, discuss, and contribute to the dApp revolution.</p>
