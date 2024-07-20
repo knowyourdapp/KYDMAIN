@@ -4,6 +4,7 @@ import Featured from './featured';
 
 import Footer from './footer';
 import cover from '../assets/dappimg.png';  
+import cov from '../assets/cov.png';  
 import logo from '../assets/dapplogo.png'; 
 import ss from '../assets/image 7.png';
 import hero1 from '../assets/magnifinal.svg';
@@ -18,20 +19,28 @@ const Homepage = () => {
     <>
       <div className="flex min-h-screen md:mt-16 lg:mt-10 mt-16  bg-orange-400  text-sm">
         <Sidebar />
-        <div className="md:ml-64 flex-1 p-4 md:p-3 lg:p-10 bg-orange-400">  
+        <div className="md:ml-64 flex-1 p-4 md:p-3 lg:p-10 bg-orange-400 justify-end">  
 
          
             
-            <div className="blue flex shadows justify-between text-white items-end rounded-lg ">
+            <div className="blue flex shadows justify-between text-white items-end rounded-lg  " style={{
+        backgroundImage: `url(${cov})`,
+        backgroundRepeat: 'repeat',
+        backgroundSize: '700px',
 
+
+        
+      }}>
+            <div className="w-1/2"></div>
             <img src={hero} alt="Game Logo" className="md:h-32 h-28 lg:h-52   rounded-lg m-2" />
+            
 
               
             </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
             
-          <div className="darkblue flex shadows  text-white rounded-lg ">
+          <div className="darkblue flex shadows  text-white rounded-lg  ">
               <img src={hero1} alt="Game Logo" className="md:w-32 w-28 lg:w-44  rounded-lg m-2" />
               <div className=" flex flex-col justify-center items-center w-full mb-4">
                 <h2 className="text-2xl font-bold blue px-4 w-full">Browse</h2>
@@ -81,15 +90,14 @@ const Homepage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 space-x-auto gap-10 text-white mt-10">
-            <div className="absolute clip  blue px-5 py-2 mt-[-20px] ml-2">
-            <h2 className="text-2xl font-bold ">What's New?</h2>
-            </div>
-            <div className="darkblue shadows text-white rounded-lg p-6">
-              
+          <div className="grid grid-cols-1 md:grid-cols-2 space-x-auto px-0 md:px-7 lg:px-28 gap-10 text-white mt-10">
+              <div className="absolute clip  blue px-5 py-2 mt-[-20px] ml-2">
+              <h2 className="text-2xl font-bold ">What's New?</h2>
+              </div>
+            <div className="darkblue shadows text-white rounded-lg p-6"> 
               <img src={ss} alt="What's New?" className="w-full  object-cover mb-4" />
               <h3 className=" font-bold text-xl">Lorem ipsum dolor sit amet, consectetur</h3>
-              <p className="text-sm">ed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p className="text-sm">ed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
             </div>
 
            
@@ -100,7 +108,7 @@ const Homepage = () => {
               
               <img src={ss} alt="What's New?" className="w-full  object-cover mb-4" />
               <h3 className=" font-bold text-xl">Lorem ipsum dolor sit amet, consectetur</h3>
-              <p className="text-sm">ed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p className="text-sm">ed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
             </div>
           </div>
           <Featured />

@@ -54,25 +54,37 @@ const About = () => {
 
 
       <div className="flex flex-col md:flex-row md:flex-wrap gap-10 px-16 text-white">
-  <div className="flex-1 rounded p-10 text-center space-y-2 md:space-x-6 md:w-1/2">
-    <img src={icon1} className="w-40 max-w-md mx-auto" />
-    <p className='font-bold text-md'>DAO COUNCIL</p>
-    <p className='text-sm'>KYD provides a decentralized approach through the KYD Council, a Decentralized Autonomous Organization (DAO) council established to foster user participation and shape the platform's future.</p>
-  </div>
-  <div className="flex-1 rounded p-5 text-center space-y-6 md:w-1/2">
-    <img src={icon3} className="w-32 max-w-md mx-auto" />
-    <p className='font-bold text-md'>BADGE SYSTEM</p>
-    <p className='text-sm'>KYD rewards valuable contributions and fosters trust with a tiered badge system.
-      Users: Earn badges for participation, fostering a stronger community.
-      Developers: Earn badges for high-scoring dApps, KYC verification, and platform engagement. These badges signal trust, quality, and dedication to users.</p>
-  </div>
-  <div className="flex-1 rounded p-5 text-center space-y-6 md:w-full">
-    <img src={icon2} className="w-32 max-w-md mx-auto" />
-    <p className='font-bold text-md'>TWO TOKEN, POWERFUL ECOSYSTEM</p>
-    <p className='text-sm'>$DP (DApps Points): This utility token rewards you for valuable contributions like reviews and upvotes. Earn $DP and fuel your engagement within the KYD community.
-    $KYD (KnowYourDapp Token): The platform's core, Proof-of-Stake (PoS) token with dual functionality for Governance and Utility of the platform.</p>
-  </div>
-</div>
+        <div className="flex-1 rounded p-10 text-center space-y-2 md:space-x-6 md:w-1/2">
+          <img src={icon1} className="w-40 max-w-md mx-auto" />
+          <p className='font-bold text-md'>DAO COUNCIL</p>
+          <p className='text-sm'>KYD provides a decentralized approach through the KYD Council, a Decentralized Autonomous Organization (DAO) council established to foster user participation and shape the platform's future.</p>
+        </div>
+        <div className="flex-1 rounded p-5 text-center space-y-6 md:w-1/2">
+          <img src={icon3} className="w-32 max-w-md mx-auto" />
+          <p className='font-bold text-md'>BADGE SYSTEM</p>
+          <p className='text-sm'>KYD rewards valuable contributions and fosters trust with a tiered badge system.
+            Users: Earn badges for participation, fostering a stronger community.
+            Developers: Earn badges for high-scoring dApps, KYC verification, and platform engagement. These badges signal trust, quality, and dedication to users.</p>
+        </div>
+        <div className="flex-1 rounded p-5 text-center space-y-6 md:w-full">
+          <img src={icon2} className="w-32 max-w-md mx-auto" />
+          <p className='font-bold text-md'>TWO TOKEN, POWERFUL ECOSYSTEM</p>
+          <p className='text-sm'>$DP (DApps Points): This utility token rewards you for valuable contributions like reviews and upvotes. Earn $DP and fuel your engagement within the KYD community.
+          $KYD (KnowYourDapp Token): The platform's core, Proof-of-Stake (PoS) token with dual functionality for Governance and Utility of the platform.</p>
+        </div>
+      </div>
+
+         <div className="flex mt-3 justify-center flex-col md:flex-row items-center space-x-6  text-white">
+          <p className="text-xl font-semibold  text-center  mt-2">
+                Future of 
+                <p className='font-bold text-3xl'>dApplication</p>
+          </p>
+
+            <p className="text-sm w-2/3 mt-2">
+            Decentralized applications (DApps) based on blockchain technology are transforming sectors with cost-efficiency, security, and transparency. Despite challenges, DApps are advancing through layer 2 solutions, interoperability, and user-friendly interfaces, aiming for wider adoption. Their growth disrupts traditional processes, promoting transparency and efficiency and hints at a bright, decentralized future.
+            </p>
+            
+          </div>
 
 
 

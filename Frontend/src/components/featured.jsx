@@ -42,8 +42,8 @@ const FeaturedDapps = () => {
     };
 
     return (
-        <div className="max-w-screen-lg rounded-xl mx-auto my-5 lg:w-screen md:w-[650px] bg-white w-80 py-10 ">
-            <h2 className="text-2xl font-bold text-center mb-8">Featured dApps</h2>
+        <div className="max-w-screen-lg shadows rounded-xl mx-auto my-5 lg:w-[910px] xl:w-screen md:w-[650px] bg-white w-80 py-6 ">
+            <h2 className="text-2xl font-bold text-center mb-2">Featured dApps</h2>
             <Slider {...settings}>
                 <div className="p-4">
                     <img src={rec} alt="League of Kingdoms" className="w-full rounded-lg" />
