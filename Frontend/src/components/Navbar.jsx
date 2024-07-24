@@ -34,16 +34,16 @@ const Navbar = ({ toggleLoginModal }) => {
                     <input 
                         type='text' 
                         placeholder='Search' 
-                        className='px-5 py-2 rounded-full placeholder:text-gray-400 darkblue border-2 border-zinc-300 focus:outline-none text-xs focus:ring-2 focus:ring-blue-500 w-full md:w-64'
+                        className='px-5 py-2 rounded-full placeholder:text-gray-400 darkblue border-2 border-zinc-300 focus:outline-none text-xs font-bold focus:ring-2 focus:ring-blue-500 w-40 md:w-64'
                     />
                     <AiOutlineSearch className='absolute  text-2xl right-2 top-1/2 transform -translate-y-1/2 text-orange-400' />
                 </div>
-                <div className='ml-4'>
-                    <button 
-                        onClick={toggleLoginModal} 
-                        className="px-4 py-2 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors text-white"
-                    >
-                        Login
+                <div className='ml-4  space-x-2 md:block hidden'>
+                    <button onClick={toggleLoginModal} className="px-4 py-2 rounded-full bg-orange-500 hover:bg-orange-600 text-xs font-bold transition-colors text-white">
+                        Log in
+                    </button>
+                    <button onClick={toggleLoginModal} className="px-4 py-2 rounded-full border-2  hover:bg-orange-600 text-xs transition-colors text-orange-white">
+                        Sign up
                     </button>
                 </div>
             </div>

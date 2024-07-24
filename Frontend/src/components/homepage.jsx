@@ -90,7 +90,7 @@ const Homepage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 space-x-auto px-0 md:px-7 lg:px-28 gap-10 text-white mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 space-x-auto px-0 md:px-7 lg:px-1 gap-16 text-white mt-10">
               <div className="absolute clip  blue px-5 py-2 mt-[-20px] ml-2">
               <h2 className="text-2xl font-bold ">What's New?</h2>
               </div>
@@ -112,7 +112,7 @@ const Homepage = () => {
             </div>
           </div>
           <Featured />
-          <Footer />
+        
         </div>
         
       </div>

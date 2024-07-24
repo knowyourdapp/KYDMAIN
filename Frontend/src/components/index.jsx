@@ -5,9 +5,12 @@ import landing from '../assets/landing.png';
 import token from '../assets/token.png';
 import token2 from '../assets/token2.png';
 import signin from '../assets/signin.png';
+
 import axios from 'axios';
 
+
 function Index() {
+  
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -80,6 +83,7 @@ function Index() {
       return () => clearTimeout(timer);
     }
   }, [showSuccessModal]);
+  
 
   return (
     <div className='relative h-screen flex flex-col justify-center overflow-hidden blue md:p-4 p-2'>

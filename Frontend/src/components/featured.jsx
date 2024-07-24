@@ -42,10 +42,12 @@ const FeaturedDapps = () => {
     };
 
     return (
-        <div className="max-w-screen-lg shadows rounded-xl mx-auto my-5 lg:w-[910px] xl:w-screen md:w-[650px] bg-white w-80 py-6 ">
-            <h2 className="text-2xl font-bold text-center mb-2">Featured dApps</h2>
+        <div className=" bg-white rounded-lg py-2 my-4">
+            <h1 className='font-bold text-black m-3 ml-8 text-lg'>Featured dApps</h1>
+        <div className="  rounded-xl mx-auto my-5 lg:w-[610px] xl:w-[600px] md:w-[530px] text-black bg-white w-80 py-1 ">
+            
             <Slider {...settings}>
-                <div className="p-4">
+                <div className="p-1">
                     <img src={rec} alt="League of Kingdoms" className="w-full rounded-lg" />
                     <h3 className="text-lg font-bold text-center mt-4">League of Kingdoms</h3>
                     <p className="text-center text-sm mt-2">
@@ -67,6 +69,7 @@ const FeaturedDapps = () => {
                     </p>
                 </div>
             </Slider>
+        </div>
         </div>
     );
 }

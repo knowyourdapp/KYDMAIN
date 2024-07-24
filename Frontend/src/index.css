@@ -16,6 +16,9 @@ body {
  background: #098D1F;
 
 }
+.shadowleft{
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
 
 .clipped-bg {
   clip-path: polygon(0 0, 100% 5%, 100% 96%, 0% 100%);
