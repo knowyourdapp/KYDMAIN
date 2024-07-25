@@ -1,19 +1,54 @@
+
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
 
-// Connect Database
+// Database
 connectDB();
 
-// Init Middleware
+
 app.use(express.json());
 app.use(cors());
 
-// Define Routes
+// Routes
 app.use('/api/auth', require('./routes/auth'));
+
+// Define Schema
+const ratingSchema = new mongoose.Schema({
+    username: String,
+    dapp: String,
+    rating: { type: Number, min: 1, max: 10 },
+    comment: String
+});
+
+const Rating = mongoose.model('Rating', ratingSchema);
+
+// Get all ratings
+app.get('/api/ratings', async (req, res) => {
+    try {
+        const ratings = await Rating.find();
+        res.json(ratings);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+app.post('/api/ratings', async (req, res) => {
+    const { username, dapp, rating, comment } = req.body;
+
+    try {
+        const newRating = new Rating({ username, dapp, rating, comment });
+        await newRating.save();
+        res.status(201).json(newRating);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
 
 const PORT = process.env.PORT || 5000;
 

@@ -10,6 +10,8 @@ import { HomeIcon, ChatBubbleBottomCenterTextIcon, FireIcon, Cog6ToothIcon, Info
 const Navbar = ({ toggleLoginModal }) => {
     const [nav, setNav] = useState(false);
 
+    
+
     const toggleNav = () => {
         setNav(!nav);
     };
