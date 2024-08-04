@@ -104,7 +104,7 @@ function Index() {
           </div>
           <div className='flex space-x-4'>
             <button className='bg-orange-500 text-black rounded-lg p-3 font-bold text-sm md:text-sm shadow' onClick={() => navigate('/home')}>Go to Home</button>
-            <button className='bg-white text-black rounded-lg p-3 font-bold text-sm md:text-sm shadow' onClick={() => navigate('/feed')}>Explore dApps!</button>
+            <button className='bg-white text-black rounded-lg p-3 font-bold text-sm md:text-sm shadow' onClick={() => navigate('/explore')}>Explore dApps!</button>
           </div>
         </div>
         <div className="h-screen z-20 w-full md:w-6/12 md:h-[700px] relative hidden md:block">
