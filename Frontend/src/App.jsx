@@ -7,7 +7,7 @@ import About from './components/about';
 import Dapp from './components/dapp';
 import Rankings from './components/rankings';
 import Footer from './components/footer';
-import Index from './components/index';
+//import Index from './components/index';
 import Feedpage from './components/feedpage';
 
 const App = () => {

@@ -11,9 +11,9 @@ import { MdFeedback } from "react-icons/md";
 
 const dapp = () => {
   return (
-    <div className="flex-grow  md:mt-20 mt-16">
-      <div className="flex flex-col md:flex-row gap-10 px-60 h-80 bg-blue-300 text-black"  style={{ backgroundImage: `url(${cover})` }}>
-        <div className="flex pt-64 ">
+    <div className=" ">
+      <div className="flex flex-col md:flex-row gap-10  h-80 bg-blue-300 text-black"  style={{ backgroundImage: `url(${cover})` }}>
+        <div className="flex pt-64 px-8 ">
           <img src={logo} alt="Logo" className="w-24 h-24 absolute z-10" />
           <div className="pl-28 text-white z-10">
             <p className="font-bold text-2xl drop-shadow-md">Mastodon</p>
@@ -25,7 +25,7 @@ const dapp = () => {
       </div>
       
       <nav className="flex items-center justify-between text-sm w-full bg-blue-800 p-5 text-white">
-        <ul className="flex space-x-24 ml-96">
+        <ul className="flex space-x-3 ml-28">
           <li>Overview</li>
           <li>Fundamental</li>
           <li>Security</li>
@@ -37,9 +37,9 @@ const dapp = () => {
 
 
 
-      <div className="flex  md:flex-row gap-7 px-28 p-3  bg-orange-300 text-black">
+      <div className="flex flex-col  gap-7  p-3  bg-orange-300 text-black">
 
-        <div className=" w-4/12  p-2 ">
+        <div className="   p-2 ">
           <div className="flex space-x-2 px-5 absolute">
             <div className="rounded-lg green h-24 w-24 shadow-sm">
               <p className='text-[50px] text-center items-center text-white font-bold mt-2 '>9.5</p>
@@ -164,7 +164,7 @@ const dapp = () => {
 
           </div>
         </div>
-        <div className="w-8/12 h-full rounded-xl shadow-sm blue  p-4">
+        <div className=" h-full rounded-xl shadow-sm blue  p-4">
         <p className='font-bold text-2xl text-white'>About</p>
         <p className='text-white text-sm'>Mastodon is a decentralized social network built on open-source software, putting you back in control of your online experience. Mastodon offers a refreshing alternative. Forget algorithms and endless scrolling. </p>
         <p className='text-white text-sm mt-3'>Think of it as a Twitter with a twist. Instead of one giant platform, Mastodon is a network of independent servers called "instances" that cater to various interests and communities. </p>

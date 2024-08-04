@@ -1,3 +1,6 @@
+/*
+
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'; // Adjust the import path as needed
@@ -7,6 +10,7 @@ import token2 from '../assets/token2.png';
 import signin from '../assets/signin.png';
 
 import axios from 'axios';
+
 
 
 function Index() {
@@ -238,3 +242,4 @@ function Index() {
 }
 
 export default Index;
+*/
