@@ -8,9 +8,9 @@ const Sidebar = () => {
   return (
     <aside className="fixed h-full w-64 darkblue text-white hidden md:block">
       <div className="m-7 rounded-lg overflow-hidden">
-       {/* <div className="bg-cover bg-center w-full h-20" style={{ backgroundImage: `url(${cover})` }}></div>*/}
+        {/* <div className="bg-cover bg-center w-full h-20" style={{ backgroundImage: `url(${cover})` }}></div>*/}
         <div className="p-3">
-           {/*<div className="flex items-center mt-[-50px] space-x-2">
+          {/*<div className="flex items-center mt-[-50px] space-x-2">
             <img src={avatar} alt="profile" className="w-12 h-12 rounded-full border-4 border-zinc-900 mt-5" />
             <h1 className="text-center text-base font-bold mt-3">John Doe</h1>
           </div>
@@ -70,9 +70,14 @@ const Sidebar = () => {
           <ChatBubbleBottomCenterTextIcon className="w-7 h-7 mr-3" />
           Feed
         </NavLink>
-        <a href="#" className="flex items-center text-center justify-center text-black font-bold py-2.5 px-7 bg-orange-400 m-5 mx-9 rounded-lg transition duration-200 hover:bg-blue-800 hover:text-white">
+        <NavLink 
+          to="/curate" 
+          className={({ isActive }) => 
+            isActive ? "flex items-center text-center justify-center py-2.5 px-7 bg-orange-400 text-black font-bold m-5 mx-9 rounded-lg transition duration-200" : "flex items-center text-center justify-center py-2.5 px-7 bg-orange-400 text-black font-bold m-5 mx-9 rounded-lg transition duration-200 hover:bg-blue-800 hover:text-white"
+          }
+        >
           Curate Now
-        </a>
+        </NavLink>
         <NavLink 
           to="/settings" 
           className={({ isActive }) => 

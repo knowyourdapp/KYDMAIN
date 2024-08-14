@@ -5,17 +5,19 @@ import Home from './components/home';
 import Homepage from './components/homepage';
 import About from './components/about';
 import Dapp from './components/dapp';
-import Rankings from './components/rankings';
+import Rankings from './components/explore';
 import Footer from './components/footer';
 //import Index from './components/index';
 import Feedpage from './components/feedpage';
+import Curate from './components/curate';
+import Submit from './components/submitdApp';
 
 const App = () => {
     return (
         <Router>
             <Navbar />
             <Routes>
-                <Route path="/" element={<Index />} />
+                <Route path="/" element={<Homepage />} />
                 <Route path="/homepage" element={<Homepage />} />
                 <Route path="/home" element={<Homepage />} />
                 
@@ -23,6 +25,8 @@ const App = () => {
                 <Route path="/explore" element={<Rankings />} />
                 <Route path="/dapp" element={<Dapp />} />
                 <Route path="/feed" element={<Feedpage />} />
+                <Route path="/curate" element={<Curate />} />
+                <Route path="/submitdApp" element={<Submit/>} />
             </Routes>
             
         </Router>
