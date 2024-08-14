@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './sidebar';
 
 import AppsGrid from './AppsGridcurate';
@@ -14,7 +14,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 
 const Rankings = () => {
   const [selectedDapp, setSelectedDapp] = useState(null);
-
+  const navigate = useNavigate();
   const handleRowClick = (dapp) => {
     setSelectedDapp(dapp);
   };
@@ -36,7 +36,7 @@ const Rankings = () => {
         <div className='w-1/4 px-3 space-y-6'>
             <div className='darkblue shadow-md rounded-lg p-4 w-full'>
               <img src={rec} alt="blockchain" className="w-full h-32" />
-              <button className='bg-blue-800 text-white p-2 font-bold shadow-md rounded-md w-full mt-2'>Submit a dApp</button>
+              <button className='bg-blue-800 text-white p-2 font-bold shadow-md rounded-md w-full mt-2' onClick={() => navigate('/submitdApp')}>Submit a dApp</button>
 
             </div>
             <div className='darkblue shadow-md rounded-lg p-4 w-full grid grid-cols-4 pt-8 gap-4'>

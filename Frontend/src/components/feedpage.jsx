@@ -33,7 +33,7 @@ const FeedPage = () => {
   const handleSubmit = async () => {
     try {
       const newRating = {
-        username: 'Andrei Parqz', 
+        username: 'Knowyourdapp', 
         dapp,
         rating,
         comment: postInput
@@ -60,7 +60,7 @@ const FeedPage = () => {
           <div className="flex justify-between items-center">
             <div className="flex justify-center space-x-2 items-center">
               <img src={avatar} alt="avatar" className="w-12 h-12 md:border-4 border-2 border-white rounded-full" />
-              <p className="text-sm font-bold">Andrei Parqz</p>
+              <p className="text-sm font-bold">Knowyoudapp</p>
             </div>
             <Dropdown />
             <div className="flex items-center">
