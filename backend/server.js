@@ -50,6 +50,49 @@ app.post('/api/ratings', async (req, res) => {
     }
 });
 
+const formDataSchema = new mongoose.Schema({
+    name: String,
+    website: String,
+    projectStatus: String,
+    shortTeaser: String,
+    isFounderDoxxed: String,
+    description: String,
+    categoryName: String,
+    categoryType: String,
+    categoryDescription: String,
+    primaryNetwork: String,
+    tokenAddress: String,
+    isTokenAudited: String,
+    coinListings: String,
+    socialLinks: {
+      telegram: String,
+      twitter: String,
+      discord: String,
+      facebook: String,
+      youtube: String,
+      reddit: String,
+      mastodon: String,
+      lenster: String,
+      medium: String,
+    },
+    logo: [String],
+    screenshots: [String],
+    video: [String],
+    chains: [String],
+  });
+  
+  const FormDataModel = mongoose.model('FormData', formDataSchema);
+
+app.post('/api/form', async (req, res) => {
+    try {
+      const formData = new FormDataModel(req.body);
+      await formData.save();
+      res.status(200).send('Form data saved successfully');
+    } catch (error) {
+      res.status(500).send('Error saving form data');
+    }
+  });
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

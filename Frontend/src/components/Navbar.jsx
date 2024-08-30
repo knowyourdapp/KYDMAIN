@@ -44,9 +44,7 @@ const Navbar = ({ toggleLoginModal }) => {
                     <button onClick={toggleLoginModal} className="px-4 py-2 rounded-full bg-orange-500 hover:bg-orange-600 text-xs font-bold transition-colors text-white">
                         Log in
                     </button>
-                    <button onClick={toggleLoginModal} className="px-4 py-2 rounded-full border-2  hover:bg-orange-600 text-xs transition-colors text-orange-white">
-                        Sign up
-                    </button>
+              
                 </div>
             </div>
             <div className={`fixed top-0 left-0 w-full h-full darkblue flex flex-col justify-center items-start transform ${nav ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out z-20`}>
