@@ -3,6 +3,8 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -14,8 +16,12 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
+
+app.use('/uploads', express.static('uploads'));
 // Routes
 app.use('/api/auth', require('./routes/auth'));
+
+
 
 // Define Schema
 const ratingSchema = new mongoose.Schema({
@@ -92,6 +98,17 @@ app.post('/api/form', async (req, res) => {
       res.status(500).send('Error saving form data');
     }
   });
+
+
+  app.get('/api/forms', async (req, res) => {
+    try {
+        const formDataList = await FormDataModel.find(); // This retrieves all documents in the collection
+        res.json(formDataList);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 const PORT = process.env.PORT || 5000;
 

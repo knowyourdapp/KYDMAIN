@@ -36,10 +36,36 @@ const FormPage = () => {
   });
 
   const [checkedChains, setCheckedChains] = useState({
-    chain1: false,
-    chain2: false,
-    chain3: false,
-    chain4: false
+    Acala: false,
+    Algorand: false,
+    Astar: false,
+    Avalanche: false,
+    Base: false,
+    'BNB Chain': false,
+    Ethereum: false,
+    Solana: false,
+    Polygon: false,
+    Optimism: false,
+    'zkSync Era': false,
+    Flow: false,
+    'Immutable X': false,
+    Moonriver: false,
+    Near: false,
+    Ronin: false,
+    Skale: false,
+    WAX: false,
+    Wemix: false,
+    ThunderCore: false,
+    Aptos: false,
+    Tezos: false,
+    Arbitrum: false,
+    Hedera: false,
+    Klaytn: false,
+    ZetaChain: false,
+    EOS: false,
+    Telos: false,
+    TRON: false,
+
 });
 
 const handleCheckboxChange = (e) => {
@@ -111,6 +137,9 @@ const handleCheckboxChange = (e) => {
       console.error('Error submitting form:', error);
     }
   };
+
+
+  
 
   const renderFormContent = () => {
     switch (activeTab) {
@@ -272,6 +301,30 @@ const handleCheckboxChange = (e) => {
           <form className='darkblue p-6 text-xs'>
             <div className="grid grid-cols-2 gap-4">
               <div>
+                <label className="block mb-2">Token Address</label>
+                <input
+                  type="text"
+                  name="tokenAddress"
+                  value={formData.tokenAddress}
+                  onChange={handleChange}
+                  className="w-full p-2 rounded blue"
+                />
+              </div>
+              
+              <div>
+                <label className="block mb-2">Is Token Audited?</label>
+                <select
+                  name="isTokenAudited"
+                  value={formData.isTokenAudited}
+                  onChange={handleChange}
+                  className="w-full p-2 rounded blue"
+                >
+                  <option value="" disabled>Select Option</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div>
                 <label className="block mb-2">Primary Network</label>
                 <select
                   name="primaryNetwork"
@@ -288,29 +341,6 @@ const handleCheckboxChange = (e) => {
                 </select>
               </div>
               <div>
-                <label className="block mb-2">Token Address</label>
-                <input
-                  type="text"
-                  name="tokenAddress"
-                  value={formData.tokenAddress}
-                  onChange={handleChange}
-                  className="w-full p-2 rounded blue"
-                />
-              </div>
-              <div>
-                <label className="block mb-2">Is Token Audited?</label>
-                <select
-                  name="isTokenAudited"
-                  value={formData.isTokenAudited}
-                  onChange={handleChange}
-                  className="w-full p-2 rounded blue"
-                >
-                  <option value="" disabled>Select Option</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
-              </div>
-              <div>
                 <label className="block mb-2">Coin Listings</label>
                 <input
                   type="text"
@@ -321,13 +351,13 @@ const handleCheckboxChange = (e) => {
                 />
               </div>
               <div>
-                <label className="block mb-2">Chains</label>
+                <label className="block mb-2">If multiple chains, please select the following chains</label>
                 <div className="grid grid-cols-4 gap-2">
                   <label>
                       <input
                           type="checkbox"
-                          id="chain1"
-                          checked={checkedChains.chain1}
+                          id="Acala"
+                          checked={checkedChains.Acala}
                           onChange={handleCheckboxChange}
                       />
                       Acala
@@ -335,8 +365,8 @@ const handleCheckboxChange = (e) => {
                   <label>
                       <input
                           type="checkbox"
-                          id="chain2"
-                          checked={checkedChains.chain2}
+                          id="Algorand"
+                          checked={checkedChains.Algorand}
                           onChange={handleCheckboxChange}
                       />
                       Algorand
@@ -344,8 +374,8 @@ const handleCheckboxChange = (e) => {
                   <label>
                       <input
                           type="checkbox"
-                          id="chain3"
-                          checked={checkedChains.chain3}
+                          id="Astar"
+                          checked={checkedChains.Astar}
                           onChange={handleCheckboxChange}
                       />
                       Astar
@@ -353,12 +383,248 @@ const handleCheckboxChange = (e) => {
                   <label>
                       <input
                           type="checkbox"
-                          id="chain4"
-                          checked={checkedChains.chain4}
+                          id="Avalanche"
+                          checked={checkedChains.Avalanche}
                           onChange={handleCheckboxChange}
                       />
                       Avalanche
                   </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Base"
+                          checked={checkedChains.Base}
+                          onChange={handleCheckboxChange}
+                      />
+                      Base
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="BNB Chain"
+                          checked={checkedChains['BNB Chain']}
+                          onChange={handleCheckboxChange}
+                      />
+                      BNB Chain
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Ethereum"
+                          checked={checkedChains.Ethereum}
+                          onChange={handleCheckboxChange}
+                      />
+                     Ethereum
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Solana"
+                          checked={checkedChains.Solana}
+                          onChange={handleCheckboxChange}
+                      />
+                     Solana
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Polygon"
+                          checked={checkedChains.Polygon}
+                          onChange={handleCheckboxChange}
+                      />
+                     Polygon
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Optimism"
+                          checked={checkedChains.Optimism}
+                          onChange={handleCheckboxChange}
+                      />
+                     Optimism
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="zkSync Era"
+                          checked={checkedChains['zkSync Era']}
+                          onChange={handleCheckboxChange}
+                      />
+                     zkSync Era
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Flow"
+                          checked={checkedChains.Flow}
+                          onChange={handleCheckboxChange}
+                      />
+                     Flow
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Immutable X"
+                          checked={checkedChains['Immutable X']}
+                          onChange={handleCheckboxChange}
+                      />
+                     Immutable X
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Moonriver"
+                          checked={checkedChains.Moonriver}
+                          onChange={handleCheckboxChange}
+                      />
+                     Moonriver
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Near"
+                          checked={checkedChains.Near}
+                          onChange={handleCheckboxChange}
+                      />
+                     Near
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Ronin"
+                          checked={checkedChains.Ronin}
+                          onChange={handleCheckboxChange}
+                      />
+                     Ronin
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Skale"
+                          checked={checkedChains.Skale}
+                          onChange={handleCheckboxChange}
+                      />
+                    Skale
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="WAX"
+                          checked={checkedChains.WAX}
+                          onChange={handleCheckboxChange}
+                      />
+                      WAX
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Wemix"
+                          checked={checkedChains.Wemix}
+                          onChange={handleCheckboxChange}
+                      />
+                     Wemix
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="ThunderCore"
+                          checked={checkedChains.ThunderCore}
+                          onChange={handleCheckboxChange}
+                      />
+                     ThunderCore
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Aptos"
+                          checked={checkedChains.Aptos}
+                          onChange={handleCheckboxChange}
+                      />
+                     Aptos
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Tezos"
+                          checked={checkedChains.Tezos}
+                          onChange={handleCheckboxChange}
+                      />
+                     Tezos
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Ethereum"
+                          checked={checkedChains.Ethereum}
+                          onChange={handleCheckboxChange}
+                      />
+                     Ethereum
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Arbitrum"
+                          checked={checkedChains.Arbitrum}
+                          onChange={handleCheckboxChange}
+                      />
+                     Arbitrum
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Hedera"
+                          checked={checkedChains.Hedera}
+                          onChange={handleCheckboxChange}
+                      />
+                     Hedera
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Klaytn"
+                          checked={checkedChains.Klaytn}
+                          onChange={handleCheckboxChange}
+                      />
+                     Klaytn
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="ZetaChain"
+                          checked={checkedChains.ZetaChain}
+                          onChange={handleCheckboxChange}
+                      />
+                     ZetaChain
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="EOS"
+                          checked={checkedChains.EOS}
+                          onChange={handleCheckboxChange}
+                      />
+                     EOS
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Telos"
+                          checked={checkedChains.Telos}
+                          onChange={handleCheckboxChange}
+                      />
+                     Telos
+                  </label>
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="TRON"
+                          checked={checkedChains.TRON}
+                          onChange={handleCheckboxChange}
+                      />
+                     TRON
+                  </label>
+
+                  
               </div>
 
               </div>
@@ -510,10 +776,10 @@ const handleCheckboxChange = (e) => {
     <div className="flex md:mt-16 lg:mt-10 mt-16 text-sm">
       <Sidebar />
 
-      {/* Main content */}
+     
       <div className="md:ml-64 flex-grow w-1/2 text-white p-0 md:p-3 lg:px-12 lg:p-10 flex bg-orange-400">
         <div className="w-full rounded-lg text-white">
-          {/* Navigation Tabs */}
+       
           <div className="flex">
             <button
               className={`px-5 py-3 rounded-t-lg ${activeTab === 'general' ? 'darkblue' : 'blue'}`}
@@ -541,7 +807,7 @@ const handleCheckboxChange = (e) => {
             </button>
           </div>
 
-          {/* Render Form Content Based on Active Tab */}
+        
           {renderFormContent()}
 
           
@@ -552,3 +818,6 @@ const handleCheckboxChange = (e) => {
 };
 
 export default FormPage;
+
+
+

@@ -11,6 +11,7 @@ import Index from './components/index';
 import Feedpage from './components/feedpage';
 import Curate from './components/curate';
 import Submit from './components/submitdApp';
+import FormDataList from './components/formdatalist';
 
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path="/feed" element={<Feedpage />} />
                 <Route path="/curate" element={<Curate />} />
                 <Route path="/submitdApp" element={<Submit/>} />
+                <Route path="/formdatalist" element={<FormDataList/>} />
             </Routes>
             
         </Router>
