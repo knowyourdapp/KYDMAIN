@@ -1,13 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './sidebar';
 
 const FormPage = () => {
   const [activeTab, setActiveTab] = useState('general');
-  const [logoFileNames, setLogoFileNames] = useState(['Browse Files']);
   const [screenshotFileNames, setScreenshotFileNames] = useState(['Browse Files']);
   const [videoFileNames, setVideoFileNames] = useState(['Browse Files']);
 
-  // State for form inputs
+  
   const [formData, setFormData] = useState({
     name: '',
     website: '',
@@ -65,6 +64,7 @@ const FormPage = () => {
     EOS: false,
     Telos: false,
     TRON: false,
+    Other:false,
 
 });
 
@@ -85,10 +85,19 @@ const handleCheckboxChange = (e) => {
   };
 
   const handleFileChange = (e, setFileNames) => {
-    const files = Array.from(e.target.files);
-    setFileNames(files.length > 0 ? files.map(file => file.name) : ['Browse Files']);
+    const files = e.target?.files;
+    if (!files) {
+      console.error("No files selected or input element not found");
+      return;
+    }
+  
+    const fileNamesArray = Array.from(files).map(file => file.name);
+    setFileNames(fileNamesArray);
+  
+    // Logging the selected files for debugging
+    console.log('Selected files:', files);
   };
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name in formData) {
@@ -106,28 +115,62 @@ const handleCheckboxChange = (e) => {
       }));
     }
   };
+  
 
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const chains = Object.keys(checkedChains).filter(key => checkedChains[key]);
-
-    const formToSubmit = {
-      ...formData,
-      logo: logoFileNames,
-      screenshots: screenshotFileNames,
-      video: videoFileNames,
-      chains
+  
+    const formToSubmit = new FormData();
+  
+    const appendFiles = (inputId, fileNames, fieldName) => {
+      const fileInputElement = document.getElementById(inputId);
+      console.log('File Input Element:', fileInputElement); // Check if element is found
+  
+      if (fileInputElement) {
+        const files = fileInputElement.files;
+        console.log('Selected Files:', files); // Check selected files
+  
+        fileNames.forEach((fileName, index) => {
+          if (files[index]) {
+            formToSubmit.append(fieldName, files[index]);
+            console.log(`Appending ${files[index].name} to ${fieldName}`);
+          } else {
+            console.warn(`File not found for ${fileName}`);
+          }
+        });
+      } else {
+        console.error(`File input element with ID ${inputId} not found`);
+      }
     };
+  
+    
+  
+    // Append form data fields
+    Object.keys(formData).forEach(key => {
+      if (typeof formData[key] === 'object' && key === 'socialLinks') {
+        Object.keys(formData[key]).forEach(subKey => {
+          formToSubmit.append(`socialLinks[${subKey}]`, formData[key][subKey]);
+        });
+      } else {
+        formToSubmit.append(key, formData[key]);
+      }
+    });
 
+   
+    appendFiles('screenshotsFileInput', screenshotFileNames, 'screenshots');
+    appendFiles('videoFileInput', videoFileNames, 'video');
+  
+    // Append selected chains
+    const chains = Object.keys(checkedChains).filter(key => checkedChains[key]);
+    chains.forEach(chain => formToSubmit.append('chains[]', chain));
+  
     try {
       const response = await fetch('http://localhost:5000/api/form', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formToSubmit),
+        body: formToSubmit,
       });
-
+  
       if (response.ok) {
         alert('Form submitted successfully!');
       } else {
@@ -138,43 +181,23 @@ const handleCheckboxChange = (e) => {
     }
   };
 
-
-  
-
   const renderFormContent = () => {
     switch (activeTab) {
       case 'general':
         return (
           <form className='darkblue p-6'>
-            <div className="grid grid-cols-2 gap-4 text-xs">
-              <div className="col-span-2">
-                <label className="block mb-2">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-1/2 p-2 rounded blue"
-                />
-              </div>
-              <div className="col-span-2">
-                <label className="block mb-2">Logo</label>
-                <div 
-                  className="border-2 w-1/2 border-dashed rounded-lg p-4 flex items-center justify-center blue cursor-pointer"
-                  onClick={() => document.getElementById('logoFileInput').click()}
-                >
-                  <p className='text-sm'>
-                    {logoFileNames.join(', ')}
-                  </p>
+              <div className="grid grid-cols-2 gap-4 text-xs">
+                <div className="col-span-2">
+                  <label className="block mb-2">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-1/2 p-2 rounded blue"
+                  />
                 </div>
-                <input
-                  id="logoFileInput"
-                  type="file"
-                  multiple
-                  className="hidden"
-                  onChange={(e) => handleFileChange(e, setLogoFileNames)}
-                />
-              </div>
+                
               <div>
                 <label className="block mb-2">Website</label>
                 <input
@@ -333,11 +356,36 @@ const handleCheckboxChange = (e) => {
                   className="w-full p-2 rounded blue"
                 >
                   <option value="" disabled>Select Network</option>
-                  <option>Ethereum</option>
-                  <option>Binance Smart Chain</option>
-                  <option>Polygon</option>
-                  <option>Arbitrum</option>
-                  <option>Other</option>
+                  <option value="Acala">Acala</option>
+                  <option value="Algorand">Algorand</option>
+                  <option value="Aptos">Aptos</option>
+                  <option value="Arbitrum">Arbitrum</option>
+                  <option value="Astar">Astar</option>
+                  <option value="Avalanche">Avalanche</option>
+                  <option value="Base">Base</option>
+                  <option value="BNB Chain">BNB Chain</option>
+                  <option value="EOS">EOS</option>
+                  <option value="Ethereum">Ethereum</option>
+                  <option value="Flow">Flow</option>
+                  <option value="Hedera">Hedera</option>
+                  <option value="Immutable X">Immutable X</option>
+                  <option value="Klaytn">Klaytn</option>
+                  <option value="Moonriver">Moonriver</option>
+                  <option value="Near">Near</option>
+                  <option value="Optimism">Optimism</option>
+                  <option value="Polygon">Polygon</option>
+                  <option value="Ronin">Ronin</option>
+                  <option value="Skale">Skale</option>
+                  <option value="Solana">Solana</option>
+                  <option value="Telos">Telos</option>
+                  <option value="Tezos">Tezos</option>
+                  <option value="ThunderCore">ThunderCore</option>
+                  <option value="TRON">TRON</option>
+                  <option value="WAX">WAX</option>
+                  <option value="Wemix">Wemix</option>
+                  <option value="zkSync Era">zkSync Era</option>
+                  <option value="ZetaChain">ZetaChain</option>
+
                 </select>
               </div>
               <div>
@@ -551,15 +599,7 @@ const handleCheckboxChange = (e) => {
                       />
                      Tezos
                   </label>
-                  <label>
-                      <input
-                          type="checkbox"
-                          id="Ethereum"
-                          checked={checkedChains.Ethereum}
-                          onChange={handleCheckboxChange}
-                      />
-                     Ethereum
-                  </label>
+                 
                   <label>
                       <input
                           type="checkbox"
@@ -624,6 +664,16 @@ const handleCheckboxChange = (e) => {
                      TRON
                   </label>
 
+                  <label>
+                      <input
+                          type="checkbox"
+                          id="Other"
+                          checked={checkedChains.Other}
+                          onChange={handleCheckboxChange}
+                      />
+                     Other
+                  </label>
+
                   
               </div>
 
@@ -644,7 +694,7 @@ const handleCheckboxChange = (e) => {
         return (
           <form className='darkblue p-6 text-xs'>
             <div>
-              <label className="block mb-2">Screenshots</label>
+              <label className="block mb-2">Logo & Screenshots</label>
               <div 
                 className="border-2 border-dashed rounded-lg p-4 flex items-center justify-center blue cursor-pointer"
                 onClick={() => document.getElementById('screenshotsFileInput').click()}
@@ -661,6 +711,7 @@ const handleCheckboxChange = (e) => {
                 onChange={(e) => handleFileChange(e, setScreenshotFileNames)}
               />
             </div>
+            <br/>
             <div>
               <label className="block mb-2">Video</label>
               <div 
@@ -679,6 +730,7 @@ const handleCheckboxChange = (e) => {
                 onChange={(e) => handleFileChange(e, setVideoFileNames)}
               />
             </div>
+            <br/>
             <div>
               <label className="block mb-2">Social Links</label>
               <div>

@@ -6,7 +6,10 @@ const FormDataList = () => {
     useEffect(() => {
         fetch('http://localhost:5000/api/forms')
             .then(response => response.json())
-            .then(data => setFormData(data))
+            .then(data => {
+                console.log('Fetched form data:', data); // Log the data
+                setFormData(data);
+            })
             .catch(error => console.error('Error fetching form data:', error));
     }, []);
 
@@ -31,23 +34,13 @@ const FormDataList = () => {
                     <div>
                         <strong>Social Links:</strong>
                         <ul>
-                            {Object.entries(form.socialLinks).map(([key, value]) => (
+                            {form.socialLinks && Object.entries(form.socialLinks).map(([key, value]) => (
                                 <li key={key}>{key}: {value}</li>
                             ))}
                         </ul>
                     </div>
 
-                    <div>
-                        <strong>Logo:</strong>
-                        {Array.isArray(form.logo) ? (
-                            form.logo.map((logo, i) => (
-                                <img key={i} src={`http://localhost:5000/uploads/${logo}`} alt={`Logo ${i+1}`} />
-                            ))
-                        ) : (
-                            <img src={`http://localhost:5000/uploads/${form.logo}`} alt="Logo" />
-                        )}
-                    </div>
-
+                
                     <div>
                         <strong>Screenshots:</strong>
                         {Array.isArray(form.screenshots) ? (
@@ -63,13 +56,13 @@ const FormDataList = () => {
                         <strong>Video:</strong>
                         {Array.isArray(form.video) ? (
                             form.video.map((vid, i) => (
-                                <video key={i} width="320" height="240" controls>
+                                <video key={i} width="320" height="140" controls>
                                     <source src={`http://localhost:5000/uploads/${vid}`} type="video/mp4" />
                                     Your browser does not support the video tag.
                                 </video>
                             ))
                         ) : (
-                            <video width="320" height="240" controls>
+                            <video width="300" height="140" controls>
                                 <source src={`http://localhost:5000/uploads/${form.video}`} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>

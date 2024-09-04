@@ -9,7 +9,8 @@ import Dropdown from './dropdown';
 
 const FeedPage = () => {
   const [postInput, setPostInput] = useState('');
-  const [dapp, setDapp] = useState('');
+  const [dappName, setDappName] = useState('');
+  const [dappImage, setDappImage] = useState('');
   const [rating, setRating] = useState(0);
   const [ratingsData, setRatingsData] = useState([]);
 
@@ -34,14 +35,16 @@ const FeedPage = () => {
     try {
       const newRating = {
         username: 'Knowyourdapp', 
-        dapp,
+        dapp: dappName,
+        dappImage,  // Include the image in the new rating
         rating,
         comment: postInput
       };
       const response = await axios.post('http://localhost:5000/api/ratings', newRating);
       setRatingsData([...ratingsData, response.data]);
       setPostInput('');
-      setDapp('');
+      setDappName('');
+      setDappImage('');
       setRating(0);
     } catch (err) {
       console.error(err);
@@ -50,6 +53,15 @@ const FeedPage = () => {
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
+  };
+
+  const handleDappSelect = (selectedDapp) => {
+    setDappName(selectedDapp.label);
+    setDappImage(selectedDapp.img);
+  };
+
+  const getRatingColor = (rating) => {
+    return rating >= 7 ? 'bg-green-600' : 'bg-red-600';
   };
 
   return (
@@ -62,12 +74,12 @@ const FeedPage = () => {
               <img src={avatar} alt="avatar" className="w-12 h-12 md:border-4 border-2 border-white rounded-full" />
               <p className="text-sm font-bold">Knowyoudapp</p>
             </div>
-            <Dropdown />
+            <Dropdown onSelect={handleDappSelect} />
             <div className="flex items-center">
               <button onClick={() => handleRatingChange(rating - 1)} disabled={rating <= 1} className="w-8 h-8 rounded-full text-white flex items-center justify-center">
                 <FaChevronLeft className="h-4 w-4" />
               </button>
-              <div className="bg-red-700 text-white font-bold text-lg px-4 py-2 mx-2 rounded-lg">
+              <div className={`${getRatingColor(rating)} text-white font-bold text-lg px-4 py-2 mx-2 rounded-lg`}>
                 {rating}
               </div>
               <button onClick={() => handleRatingChange(rating + 1)} disabled={rating >= 10} className="w-8 h-8 rounded-full text-white flex items-center justify-center">
@@ -89,7 +101,6 @@ const FeedPage = () => {
             </div>
           </div>
           <div className="flex justify-end items-center space-x-2 mt-5">
-            
             <p className="text-xs">Create an article</p>
             <button onClick={handleSubmit} className="px-5 h-8 rounded-md bg-blue-500 text-white flex items-center justify-center">
               Submit
@@ -104,18 +115,19 @@ const FeedPage = () => {
                 <img src={avatar} alt="avatar" className="w-10 h-10 rounded-full" />
                 <div>
                   <p className="text-sm font-bold">{rating.username}</p>
-                  <p className="text-[10px] text-orange-500 font-semibold">Rated {rating.rating} dApps</p>
+                  <p className="text-[10px] text-orange-500 font-semibold">Rated {rating.dapp}  ({rating.rating})</p>
                 </div>
               </div>
               <div className="flex items-center md:space-x-20 space-x-3">
                 <div className="flex items-center">
                   <p className="text-xs font-semibold">Rated</p>
-                  <img src={logo} alt="avatar" className="w-6 h-6 rounded-full m-2" />
-                  <p className="text-xs">{rating.dapp}</p>
+                  <img src={rating.dappImage} alt="dApp logo" className="w-6 h-6 rounded-full m-2" /> {/* Display dApp image */}
+                  <p className="text-xs">{rating.dapp}</p> {/* Optionally, display dApp name */}
                 </div>
-                <div className={`bg-${rating.rating >= 7 ? 'green' : 'red'}-600 text-white font-bold text-lg px-4 py-2 mx-2 rounded-lg`}>
+                  <div className={`${getRatingColor(rating.rating)} text-white font-bold text-lg px-4 py-2 mx-2 rounded-lg`}>
                   {rating.rating}
                 </div>
+
               </div>
             </div>
             <div className="px-10 py-2">
@@ -128,6 +140,6 @@ const FeedPage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default FeedPage;
