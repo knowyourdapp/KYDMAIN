@@ -4,6 +4,7 @@ import axios from 'axios';
 import avatar from '../assets/axie.png';
 import logo from '../assets/dapplogo.png';
 import Sidebar from './sidebar';
+import Footer from './footer';
 import { FaceSmileIcon, GifIcon } from '@heroicons/react/24/outline';
 import Dropdown from './dropdown';
 

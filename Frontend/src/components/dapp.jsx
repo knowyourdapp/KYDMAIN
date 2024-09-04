@@ -1,8 +1,11 @@
 
 import React from 'react';
-import cover from '../assets/dappimg.png';
-import logo from '../assets/dapplogo.png';
-import ss from '../assets/ss.png';
+import Slider from 'react-slick';
+import cover from '../assets/pikamoon-1.png';
+import logo from '../assets/pikamoon-logo.png';
+import ss from '../assets/pikamoon-2.png';
+import ss1 from '../assets/pikamoon-3.png';
+import ss2 from '../assets/pikamoon-4.png';
 import { TiArrowSortedUp } from "react-icons/ti";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { MdFeedback } from "react-icons/md";
@@ -10,13 +13,48 @@ import { MdFeedback } from "react-icons/md";
 
 
 const dapp = () => {
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                infinite: true,
+                dots: true
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+            }
+        }
+    ]
+};
+
   return (
     <div className=" ">
-      <div className="flex flex-col md:flex-row gap-10  h-80 bg-blue-300 text-black"  style={{ backgroundImage: `url(${cover})` }}>
+      <div className="flex flex-col md:flex-row gap-10  h-80 bg-blue-300 text-black"  style={{ backgroundImage: `url(${cover})`,  backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', }}
+      >
         <div className="flex pt-64 px-8 ">
           <img src={logo} alt="Logo" className="w-24 h-24 absolute z-10" />
           <div className="pl-28 text-white z-10">
-            <p className="font-bold text-2xl drop-shadow-md">Mastodon</p>
+            <p className="font-bold text-2xl drop-shadow-md">Pikamoon</p>
             <p className="font-bold text-base">Rank #12</p>
           </div>
           <div className="absolute w-full h-16  bg-gradient-to-t left-0 from-blue-800 to-transparent"></div>
@@ -166,12 +204,27 @@ const dapp = () => {
         </div>
         <div className=" h-full rounded-xl shadow-sm blue  p-4">
         <p className='font-bold text-2xl text-white'>About</p>
-        <p className='text-white text-sm'>Mastodon is a decentralized social network built on open-source software, putting you back in control of your online experience. Mastodon offers a refreshing alternative. Forget algorithms and endless scrolling. </p>
+        <p className='text-white text-sm'>Pikamoon is a decentralized social network built on open-source software, putting you back in control of your online experience. Mastodon offers a refreshing alternative. Forget algorithms and endless scrolling. </p>
         <p className='text-white text-sm mt-3'>Think of it as a Twitter with a twist. Instead of one giant platform, Mastodon is a network of independent servers called "instances" that cater to various interests and communities. </p>
         
         <p className='font-bold text-base text-white mt-4'>Screenshots</p>
-        <img src={ss}  className=" h-80  mx-auto mt-2" />
-        
+        {/* need adjust the sizing for */}
+        <div className="bg-white rounded-lg py-2 my-4">
+            <div className="rounded-xl mx-auto my-5 lg:w-[610px] xl:w-[1250px] md:w-[530px] text-black bg-white w-80 py-1">
+                <Slider {...settings}>
+                    <div className="p-4">
+                        <img src={ss} alt="Slide 1" className="w-full rounded-lg" />
+                    </div>
+                    <div className="p-4">
+                        <img src={ss1} alt="Slide 2" className="w-full rounded-lg" />
+                    </div>
+                    <div className="p-4">
+                        <img src={ss2} alt="Slide 3" className="w-full rounded-lg" />
+                    </div>
+                </Slider>
+            </div>
+        </div>
+                
         </div>
 
       </div>
