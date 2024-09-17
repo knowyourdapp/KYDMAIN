@@ -52,12 +52,18 @@ function Index() {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', loginData);
       console.log('Login successful:', response.data);
+      
+      // Store username in localStorage
+      localStorage.setItem('email', response.data.email);
+      console.log('Stored email:', localStorage.getItem('email'));
+
       navigate('/home'); // Redirect to home page
     } catch (error) {
       console.error('Login error:', error.response.data);
       setErrorMessages({ ...errorMessages, login: error.response.data.message || 'Invalid credentials' });
     }
   };
+  
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
@@ -132,7 +138,7 @@ function Index() {
                   <input
                     type="email"
                     name="email"
-                    value={loginData.email}
+                    value={loginData.username}
                     onChange={handleLoginChange}
                     className="w-full p-2 border text-sm border-gray-300 rounded-lg shadow-lg"
                   />

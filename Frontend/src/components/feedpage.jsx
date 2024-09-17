@@ -9,6 +9,7 @@ import { FaceSmileIcon, GifIcon } from '@heroicons/react/24/outline';
 import Dropdown from './dropdown';
 
 const FeedPage = () => {
+  const [username, setUsername] = useState('Guest'); // Initialize as 'Guest'
   const [postInput, setPostInput] = useState('');
   const [dappName, setDappName] = useState('');
   const [dappImage, setDappImage] = useState('');
@@ -17,7 +18,26 @@ const FeedPage = () => {
 
   useEffect(() => {
     fetchRatings();
+    const storedEmail = localStorage.getItem('email'); // Retrieve email from localStorage
+  console.log('Retrieved email:', storedEmail);
+  
+  if (storedEmail) {
+    // Fetch username based on the email
+    fetchUsername(storedEmail);
+  }
+    
   }, []);
+
+  const fetchUsername = async (email) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/get-username', { email }); // Assuming you create this endpoint
+      const { username } = response.data;
+      setUsername(username); // Set the username based on response
+    } catch (err) {
+      console.error('Error fetching username:', err);
+      setUsername('Guest'); // Fallback in case of error
+    }
+  };
 
   const fetchRatings = async () => {
     try {
@@ -35,7 +55,7 @@ const FeedPage = () => {
   const handleSubmit = async () => {
     try {
       const newRating = {
-        username: 'Knowyourdapp', 
+        username, 
         dapp: dappName,
         dappImage,  // Include the image in the new rating
         rating,
@@ -73,7 +93,7 @@ const FeedPage = () => {
           <div className="flex justify-between items-center">
             <div className="flex justify-center space-x-2 items-center">
               <img src={avatar} alt="avatar" className="w-12 h-12 md:border-4 border-2 border-white rounded-full" />
-              <p className="text-sm font-bold">Knowyoudapp</p>
+              <p className="text-sm font-bold">{username || 'Guest'}</p>
             </div>
             <Dropdown onSelect={handleDappSelect} />
             <div className="flex items-center">

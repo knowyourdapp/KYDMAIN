@@ -58,8 +58,25 @@ exports.login = async (req, res) => {
 
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 360000 }, (err, token) => {
       if (err) throw err;
-      res.json({ token });
+      res.json({ token, email }); // Return token and email to the frontend
     });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
+
+
+exports.getUsername = async (req, res) => {
+  const { email } = req.body;
+  
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.json({ username: user.username });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
