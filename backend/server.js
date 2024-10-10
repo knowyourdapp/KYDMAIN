@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
 require('dotenv').config();
+const { sendToken } = require('./token');
+const User = require('./models/User'); // Adjust the path to where your User model is defined
+
 
 
 const app = express();
@@ -101,6 +104,38 @@ const formDataSchema = new mongoose.Schema({
   
 const FormDataModel = mongoose.model('FormData', formDataSchema);
 
+app.post('/api/auth/get-user-wallet', async (req, res) => { 
+    const { username } = req.body;
+  
+    try {
+      // Fetch the user from the 'users' collection
+      const user = await User.findOne({ username }); // Use 'User' if that's your model
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Return the user's wallet address
+      res.status(200).json({ walletAddress: user.walletAddress });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+  
+
+//send token route
+app.post('/send-token', async (req, res) => {
+    const { fromSecretKey, toPublicKey, mintAddress, amount } = req.body;
+  
+    try {
+      const fromSecretKeyArray = Uint8Array.from(fromSecretKey);
+      const signature = await sendToken(fromSecretKeyArray, toPublicKey, mintAddress, amount);
+      res.status(200).json({ success: true, signature });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  });
+
 // Handle Form Data with File Uploads
 app.post('/api/form', upload.fields([
     
@@ -152,4 +187,4 @@ app.get('/api/forms', async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log('Server started on port ${PORT}'));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

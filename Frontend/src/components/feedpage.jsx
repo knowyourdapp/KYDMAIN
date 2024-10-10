@@ -7,6 +7,7 @@ import Sidebar from './sidebar';
 import Footer from './footer';
 import { FaceSmileIcon, GifIcon } from '@heroicons/react/24/outline';
 import Dropdown from './dropdown';
+import SolflareIntegration from './SolflareIntegration';
 
 const FeedPage = () => {
   const [username, setUsername] = useState('Guest'); // Initialize as 'Guest'
@@ -61,7 +62,27 @@ const FeedPage = () => {
         rating,
         comment: postInput
       };
+      
+      // Submit the rating
       const response = await axios.post('http://localhost:5000/api/ratings', newRating);
+      
+      // After successfully submitting the rating, retrieve the user's wallet address
+      const userResponse = await axios.post('http://localhost:5000/api/auth/get-user-wallet', { username });
+      const { walletAddress } = userResponse.data; // Adjust this based on your endpoint response structure
+  
+      // Send tokens to the user's wallet
+      const tokenResponse = await axios.post('http://localhost:5000/send-token', {
+        fromSecretKey:[100, 27, 245, 177, 107, 90, 225, 54, 176, 210, 127, 22, 49, 148, 203, 42, 160, 67, 187, 106, 109, 61, 
+        236, 177, 209, 122, 17, 141, 100, 213, 183, 246, 252, 9, 191, 203, 3, 45, 125, 99, 251, 79, 16, 106, 204,
+        206, 134, 12, 130, 25, 44, 173, 102, 70, 170, 108, 209, 26, 148, 33, 122, 72, 103, 15], // Replace with the actual secret key or retrieve it securely
+        toPublicKey: walletAddress,
+        mintAddress: "99Wo6VwDLsRHEQWuyuc3TvTRFAwDBCkGeREwR2bJCcF7", // Replace with your actual mint address
+        amount: 100 // Specify the amount of tokens to send
+      });
+  
+      console.log(tokenResponse.data); // Log the response from the token transfer
+  
+      // Update local state
       setRatingsData([...ratingsData, response.data]);
       setPostInput('');
       setDappName('');
@@ -71,7 +92,7 @@ const FeedPage = () => {
       console.error(err);
     }
   };
-
+  
   const handleRatingChange = (newRating) => {
     setRating(newRating);
   };

@@ -3,6 +3,8 @@ import avatar from '../assets/cj.png';
 import cover from '../assets/cover.png';
 import { NavLink } from 'react-router-dom';
 import { HomeIcon, ChatBubbleBottomCenterTextIcon, FireIcon, Cog6ToothIcon, InformationCircleIcon, PencilIcon } from '@heroicons/react/24/solid';
+import SolflareIntegration from './SolflareIntegration';
+
 
 const Sidebar = () => {
   return (
@@ -96,6 +98,9 @@ const Sidebar = () => {
           <InformationCircleIcon className="w-7 h-7 mr-3" />
           About
         </NavLink>
+        <div className="p-4 mt-4 flex items-center py-2.5 px-7 transition duration-200 bg-blue-800 text-white flex items-center py-2.5 px-7 transition duration-200 hover:bg-blue-800 hover:text-white">
+          <SolflareIntegration />
+        </div>
       </nav>
     </aside>
   );
