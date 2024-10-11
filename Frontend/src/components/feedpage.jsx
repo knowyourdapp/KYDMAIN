@@ -72,11 +72,11 @@ const FeedPage = () => {
   
       // Send tokens to the user's wallet
       const tokenResponse = await axios.post('http://localhost:5000/send-token', {
-        fromSecretKey:[100, 27, 245, 177, 107, 90, 225, 54, 176, 210, 127, 22, 49, 148, 203, 42, 160, 67, 187, 106, 109, 61, 
-        236, 177, 209, 122, 17, 141, 100, 213, 183, 246, 252, 9, 191, 203, 3, 45, 125, 99, 251, 79, 16, 106, 204,
-        206, 134, 12, 130, 25, 44, 173, 102, 70, 170, 108, 209, 26, 148, 33, 122, 72, 103, 15], // Replace with the actual secret key or retrieve it securely
+        fromSecretKey:[208,22,50,106,68,240,35,127,151,198,210,74,109,241,196,45,133,
+          200,139,185,59,56,132,47,51,183,192,125,57,186,143,225,66,99,228,110,1,
+          50,70,104,91,191,83,44,162,92,124,53,34,147,28,144,9,245,230,84,138,227,157,1,80,234,170,219], // Replace with the actual secret key or retrieve it securely
         toPublicKey: walletAddress,
-        mintAddress: "99Wo6VwDLsRHEQWuyuc3TvTRFAwDBCkGeREwR2bJCcF7", // Replace with your actual mint address
+        mintAddress: "6D7KDTLi9szw5993gMm1nKzt6w2xk5xYYMqVpA7SamLe", // Replace with your actual mint address
         amount: 100 // Specify the amount of tokens to send
       });
   
