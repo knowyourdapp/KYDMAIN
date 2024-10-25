@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
 require('dotenv').config();
+const auth =require('./routes/auth')
+
+
 const { sendToken } = require('./token');
 const User = require('./models/User'); // Adjust the path to where your User model is defined
 
@@ -17,7 +20,7 @@ connectDB();
 
 app.use(express.json());
 app.use(cors());
-
+app.use('/api/v1/risk-score', auth);
 
 
 // Configure Multer for File Uploads
@@ -183,6 +186,8 @@ app.get('/api/forms', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+
 
 
 const PORT = process.env.PORT || 5000;

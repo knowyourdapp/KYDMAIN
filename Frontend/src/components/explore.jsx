@@ -4,6 +4,7 @@ import Sidebar from './sidebar';
 import blockchain from '../assets/blockchain.png';
 import Dropdown from './dropdown-explore';
 import AppsGrid from './AppsGrid';
+import { useNavigate } from 'react-router-dom';
 
 import ss from '../assets/image 7.png';
 import logo from '../assets/axie-infinity-logo.png';
@@ -12,10 +13,28 @@ import Dapp from './dapp';
 import { RiCloseCircleFill } from "react-icons/ri";
 
 const Rankings = () => {
+  const navigate = useNavigate();
+
   const [selectedDapp, setSelectedDapp] = useState(null);
+  const [formData, setFormData] = useState([]);
+
+  useEffect(() => {
+    // Fetch form data from the server when the component loads
+    const fetchFormData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/forms'); // Backend API endpoint
+        const data = await response.json();
+        setFormData(data);
+      } catch (error) {
+        console.error('Error fetching form data:', error);
+      }
+    };
+
+    fetchFormData();
+  }, []);
 
   const handleRowClick = (dapp) => {
-    setSelectedDapp(dapp);
+    navigate('/dapp', { state: dapp });  
   };
 
   return (
@@ -66,15 +85,13 @@ const Rankings = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rank) => (
-                    <tr key={rank} className="border-b-4 border-indigo-300 py-4 cursor-pointer" onClick={() => handleRowClick(`DApp ${rank}`)}>
-                      <td className="text-center font-bold">{rank}</td>
-                      <td className="flex items-center space-x-2 truncate"><img src={logo} alt="Game Logo" className="h-8" />Axie Infinity</td>
-                      <td className="justify-center"><img src={blockchain} alt="Game Logo" className="h-6 mx-auto" /></td>
-                      <td className="text-center">116k</td>
-                      <td className="text-center text-red-600">-1.6m</td>
-                      <td className="text-center">116k</td>
-                      <td className="text-center">116k</td>
+                {formData.map((dapp, index) => (
+                    <tr key={index} className="border-b-4 border-indigo-300 py-4 cursor-pointer" onClick={() => handleRowClick(dapp)}>
+                      <td className="text-center">{index + 1}</td>
+                      <td className="text-center">{dapp.name}</td>
+                      <td className="text-center">{dapp.projectStatus}</td>
+                      <td className="text-center">{dapp.primaryNetwork}</td>
+                      <td className="text-center">{dapp.categoryName}</td>
                     </tr>
                   ))}
                 </tbody>
