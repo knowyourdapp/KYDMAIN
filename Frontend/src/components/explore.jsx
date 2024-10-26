@@ -5,12 +5,15 @@ import blockchain from '../assets/blockchain.png';
 import Dropdown from './dropdown-explore';
 import AppsGrid from './AppsGrid';
 import { useNavigate } from 'react-router-dom';
+import solana from '../assets/solana.jpg'
+
 
 import ss from '../assets/image 7.png';
 import logo from '../assets/axie-infinity-logo.png';
 import Featured from './featured';
 import Dapp from './dapp';
 import { RiCloseCircleFill } from "react-icons/ri";
+import { SolanaJSONRPCErrorCode } from '@solana/web3.js';
 
 const Rankings = () => {
   const navigate = useNavigate();
@@ -76,22 +79,72 @@ const Rankings = () => {
                 <thead className='blue'>
                   <tr className="border-y-2 border-indigo-100">
                     <th className='p-2 text-center'>Rank</th>
-                    <th className='text-left'>Name</th>
+                    <th className='text-center'></th>
+                    <th className='text-center'>Name</th>
                     <th className='text-center'>Blockchain</th>
-                    <th className='text-center'>Token</th>
-                    <th className='text-center'>Volume</th>
-                    <th className='text-center'>Editorial</th>
-                    <th className='text-center'>Rating</th>
+                    <th className='text-center'>Category</th>
+                    <th className='text-center'>Status</th>
+                    <th className='text-center'>KYD Ratings</th>
+                    <th className='text-center'>Community Score</th>
                   </tr>
                 </thead>
                 <tbody>
                 {formData.map((dapp, index) => (
                     <tr key={index} className="border-b-4 border-indigo-300 py-4 cursor-pointer" onClick={() => handleRowClick(dapp)}>
                       <td className="text-center">{index + 1}</td>
+                      <td className="text-center">
+                      {Array.isArray(dapp.screenshots) && dapp.screenshots.length > 0 ? (
+                dapp.screenshots.map((screenshot, screenshotIndex) => (
+                  <img
+                    key={screenshotIndex}
+                    src={`http://localhost:5000/uploads/${screenshot}`} // Construct the URL
+                    alt={`Screenshot ${screenshotIndex + 1}`} // Provide an alt text
+                    className="w-5 h-5 object-cover m-1" // Add classes for size and spacing
+                  />
+                ))
+              ) : (
+                <p>No screenshots available</p> // Fallback if no screenshots exist
+              )}
+            </td>
                       <td className="text-center">{dapp.name}</td>
-                      <td className="text-center">{dapp.projectStatus}</td>
+                      <td className="flex justify-center items-center">
+                      <img src={solana} alt="Logo" className="w-5 h-5" /> </td>
                       <td className="text-center">{dapp.primaryNetwork}</td>
-                      <td className="text-center">{dapp.categoryName}</td>
+                      <td className="text-center">{dapp.projectStatus}</td>
+                      <td className="text-center">
+                      <div
+                        className={`w-8 h-8 flex justify-center items-center mx-auto rounded-md font-bold text-white ${
+                          index === 0
+                            ? "bg-green-700"
+                            : index === 1
+                            ? "bg-green-700"
+                            : index === 2
+                            ? "bg-green-700"
+                            : "bg-red-500"
+                        }`}
+                      >
+                        {index === 0 ? "10" : index === 1 ? "9" : index === 2 ? "7" : "6"}
+                      </div>
+                    </td>
+
+                    <td className="text-center">
+                      <div
+                        className={`w-8 h-8 flex justify-center items-center mx-auto rounded-md font-bold text-white ${
+                          index === 0
+                            ? "bg-green-700"
+                            : index === 1
+                            ? "bg-green-700"
+                            : index === 2
+                            ? "bg-green-700"
+                            : "bg-red-500"
+                        }`}
+                      >
+                        {index === 0 ? "10" : index === 1 ? "9" : index === 2 ? "7" : "6"}
+                      </div>
+                    </td>
+
+
+ 
                     </tr>
                   ))}
                 </tbody>

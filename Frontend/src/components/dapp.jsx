@@ -90,7 +90,11 @@ const Dapp = () => {
     <div>
       <div className="flex flex-col md:flex-row gap-10 h-80 bg-blue-300 text-black" style={{ backgroundImage: `url(${cover})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
         <div className="flex pt-64 px-8">
-          <img src={logo} alt="Logo" className="w-24 h-24 absolute z-10" />
+        <img
+          src={`http://localhost:5000/uploads/${dapp.screenshots}`} // Construct the logo URL
+          alt="Logo"
+          className="w-24 h-24 absolute z-10"
+        />
           <div className="pl-28 text-white z-10">
             <p className="font-bold text-2xl drop-shadow-md">{dapp.name}</p>
             <p className="font-bold text-base">Rank #12</p>

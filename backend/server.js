@@ -99,7 +99,7 @@ const formDataSchema = new mongoose.Schema({
       lenster: String,
       medium: String,
     },
-  
+    logo: [String],
     screenshots: [String],
     video: [String],
     chains: [String],
@@ -141,7 +141,7 @@ app.post('/send-token', async (req, res) => {
 
 // Handle Form Data with File Uploads
 app.post('/api/form', upload.fields([
-    
+    { name: 'logo'},
     { name: 'screenshots', maxCount: 10 },
     { name: 'video', maxCount: 10 }
 ]), async (req, res) => {
@@ -149,6 +149,7 @@ app.post('/api/form', upload.fields([
         const { name, website, projectStatus, shortTeaser, isFounderDoxxed, description, categoryName, categoryType, categoryDescription, primaryNetwork, tokenAddress, isTokenAudited, coinListings, socialLinks, chains } = req.body;
         
         const formData = new FormDataModel({
+           
             name,
             website,
             projectStatus,
@@ -164,7 +165,7 @@ app.post('/api/form', upload.fields([
             coinListings,
             socialLinks,
             chains,
-           
+            screenshots: req.files.logo ? req.files.logo.map(file => file.filename) : [],
             screenshots: req.files.screenshots ? req.files.screenshots.map(file => file.filename) : [],
             video: req.files.video ? req.files.video.map(file => file.filename) : []
      

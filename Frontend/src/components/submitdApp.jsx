@@ -5,6 +5,8 @@ const FormPage = () => {
   const [activeTab, setActiveTab] = useState('general');
   const [screenshotFileNames, setScreenshotFileNames] = useState(['Browse Files']);
   const [videoFileNames, setVideoFileNames] = useState(['Browse Files']);
+  const [logoFileNames, setlogoFileNames] = useState(['Browse Files']);
+  
 
   
   const [formData, setFormData] = useState({
@@ -157,7 +159,7 @@ const handleCheckboxChange = (e) => {
       }
     });
 
-   
+    appendFiles('logoFileInput', logoFileNames, 'logo');
     appendFiles('screenshotsFileInput', screenshotFileNames, 'screenshots');
     appendFiles('videoFileInput', videoFileNames, 'video');
   
@@ -693,6 +695,25 @@ const handleCheckboxChange = (e) => {
       case 'content':
         return (
           <form className='darkblue p-6 text-xs'>
+             <div>
+              <label className="block mb-2">Logo</label>
+              <div 
+                className="border-2 border-dashed rounded-lg p-4 flex items-center justify-center blue cursor-pointer"
+                onClick={() => document.getElementById('logoFileInput').click()}
+              >
+                <p className='text-sm'>
+                  {logoFileNames.join(', ')}
+                </p>
+              </div>
+              <input
+                id="logoFileInput"
+                type="file"
+                multiple
+                accept="image/*" 
+                className="hidden"
+                onChange={(e) => handleFileChange(e, setlogoFileNames)}
+              />
+            </div>
             <div>
               <label className="block mb-2">Logo & Screenshots</label>
               <div 
